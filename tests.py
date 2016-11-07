@@ -11,7 +11,11 @@ class EvoTest(unittest.TestCase):
 		Evo.app.config['TESTING']=True
 	def test_main_page(self):
 		responce = self.app.get('/login')
-		assert '<html>' in responce.data,"Error"	
+		assert '<html>' in responce.data,"Error"
+	def test_position(self):
+		responce = self.app.get('/departments')
+		print responce
+	
 	def add_items(self):
 		self.department = Department("R&D",0,"Research and Development")
 		self.position = Position("Lead Researcher","Main researcher in the department")

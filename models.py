@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from Evo import app
 import config 
+from werkzeug.security import generate_password_hash,check_password_hash
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'True'
 app.config.from_object('config')
@@ -47,17 +48,22 @@ class User(db.Model):
 	phone = db.Column(db.String(8))
 	email = db.Column(db.String(20))
 	position_id = db.Column('position_id',db.Integer,db.ForeignKey('position.id'))
-
-	
 	superuser = db.Column(db.Boolean)
-	def __init__(self,first_name,second_name,department,birth_date,phone,email,position,superuser):
+	password = db.Column(db.String)
+	def __init__(self,first_name,second_name,birth_date,phone,email,superuser):
 		self.first_name = first_name
 		self.second_name = second_name
 		self.birth_date = birth_date
 		self.phone = phone
 		self.email = email
+		self.superuser = superuser
+		self.password = self.set_password(password)
+	def edit(self,position,department):
 		self.position_id = position
 		self.department_id = department
-		self.superuser = superuser
+	def set_password(self):
+		return generate_password_hash(password)
+	def check_password(self):
+		return check_password_hash(self.password, password)
 	def __repr__(self):
 		return "<User %r>" % self.first_name
