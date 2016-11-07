@@ -1,0 +1,33 @@
+<html>
+<head>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type=text/javascript src="{{url_for('static', filename='jquery.js') }}"></script>
+</head>
+<body>
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Test project</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#" id ='show_user'>Edit User</a></li>
+      <li><a href="#" id = 'show_department'>Edit Department</a></li> 
+      <li><a href="#" id = 'show_position'>Edit Position</a></li> 
+    </ul>
+  </div>
+</nav>
+{% block auth %}
+{% endblock %}
+
+{% block main %}
+{% endblock %}
+</body>
+
+</html>

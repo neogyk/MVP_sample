@@ -1,0 +1,123 @@
+{% extends "index.html" %}
+{% block main%}
+<script>
+$('#show_user').click(function(){
+	$('#edit_user').toggle();
+});
+$('#show_position').click(function(){
+	$('#edit_position').toggle();
+});
+$('#show_department').click(function(){
+	$('#edit_department').toggle();
+});
+
+
+
+</script>
+<div class="panel-group" id="edit_user">
+    <div class="panel panel-default">
+      <div class="panel-heading">Edit User</div>
+      <div class="panel-body">	
+	<form>
+  		<div class="form-group">
+    			<label for="first_name">First Name:</label>
+    			<input  class="form-control" id="pwd">
+  		</div>
+  		<div class="form-group">
+    			<label for="second_name">Second name:</label>
+    			<input type="email" class="form-control" id="email">
+  		</div>
+  		<div class="form-group">
+    			<label for="email">Email address:</label>
+    			<input type="email" class="form-control" id="email">
+  		</div>
+  		<div class="form-group">
+    			<label for="phone">Phone number:</label>
+    			<input type="email" class="form-control" id="email">
+  		</div>
+  		<div class="form-group">
+    			<label for="birth_date">Birth date:</label>
+    			<input type="email" class="form-control" id="email">
+  		</div>
+  		<div class="form-group">
+	  		<label for="position">Select Position:</label>
+	  		<select class="form-control" id="sel1">
+	    			{% for department in data.departments %}
+	    		<option>{{ department }}</option>
+	    			{% endfor %}
+	  		</select>
+ 		</div>
+  		<div class="form-group">
+	  		<label for="department">Select Department:</label>
+	  		<select class="form-control" id="sel1">
+	    			{% for positions in data.positions %}
+	    		<option>{{ positions }}</option>
+	    			{% endfor %}
+	  		</select>
+  		</div>
+  		<button type="submit" class="btn btn-default">Submit</button>
+	</form>	
+</div>
+</div>
+</div>
+<div class="panel-group" id="edit_department">
+    <div class="panel panel-default">
+      <div class="panel-heading">Edit Department</div>
+      <div class="panel-body">
+
+
+	<form>
+	  
+	<div class="form-group">
+	    <label for="department_name">Department Name:</label>
+	    <input type="password" class="form-control" id="pwd">
+	</div>
+	<div class="description">
+	    <label for="email">Description</label>
+	    <input type="email" class="form-control" id="email">
+	</div>
+	<div class="form-group">
+	    <label for="parent">Select Parent:</label>
+	    <select class="form-control" id="sel1">
+	    		{% for department in data.departments %}
+	    	<option>{{ department }}</option>
+		    	{% endfor %}
+	    </select>
+	</div>
+	<div class="form-group">
+	    <label for="superuser">Select Superuser:</label>
+	    <select class="form-control" id="sel1">
+		    {% for positions in data.positions %}
+	    	<option>{{ positions }}</option>
+		    {% endfor %}
+	    </select>
+	</div>
+	<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+</div>
+</div>
+
+
+</div>
+
+<div class="panel-group" id="edit_position">
+    <div class="panel panel-default">
+      <div class="panel-heading">Edit Position</div>
+      <div class="panel-body">
+
+
+	<form>
+	  
+	<div class="form-group">
+	    <label for="position_name">Position Name:</label>
+	    <input type="password" class="form-control" id="pwd">
+	</div>
+	<div class="form-group">
+	    <label for="department">Description</label>
+	    <input class="form-control" id="email">
+	</div>
+	<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+</div>
+</div>
+{% endblock %}
