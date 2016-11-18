@@ -1,0 +1,27 @@
+
+{% extends "index.html" %}
+
+<div clas="container">
+<h2>Well Size</h2>
+{% for department in departments %}
+<div class="well well-sm">
+	<ul>
+		<li>
+			{% department.name %}
+		</li>
+        <li>
+			{% department.executive %}
+		</li>
+		<li>
+			{% department.parent %}
+		</li>
+		<li>
+			{% department.description %}
+		</li>
+	</ul>
+</div>
+{% endfor %}
+
+</div>
+
+{% endblock %}

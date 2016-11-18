@@ -1,26 +1,24 @@
-<html>
-<head>
+<!doctype html>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<html ng-app = "trainapp">
+<head>
+<script src = "{{url_for('static',filename = 'jquery-3.1.1.min.js')}}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type=text/javascript src="{{url_for('static', filename='jquery.js') }}"></script>
+<script type=text/javascript>
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 </head>
 <body>
-<script type=text/javascript>
-  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-</script>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Test project</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#" id ='show_user'>Edit User</a></li>
-      <li><a href="#" id = 'show_department'>Edit Department</a></li> 
-      <li><a href="#" id = 'show_position'>Edit Position</a></li> 
-    </ul>
+    </div>  
+    {% block buttons %}
+    {% endblock %}
   </div>
 </nav>
 {% block auth %}
@@ -28,6 +26,105 @@
 
 {% block main %}
 {% endblock %}
+
+{% block edit%}
+{% endblock%}
+<script>
+
+
+var train_app = angular.module('trainapp',[]);
+    
+train_app.controller("edit_position",function($scope, $http){
+      $scope.add_position = function(){
+
+          $http({
+            method:"POST",
+            url:"/position",
+            data:{position_name:$scope.position_name,position_description:$scope.position_description}
+          }).then(function(responce){
+                console.log(responce.data.status)
+              }),function(responce){
+              console.log('Erro')
+              }
+          }
+
+});
+//controller for adding/editing department
+train_app.controller("edit_department",function($scope, $http){
+      $scope.add_department = function(){
+
+          $http({
+            method:"POST",
+            url:"/department",
+            data:{name:$scope.department_name,description:$scope.department_description}
+          }).then(function(responce){
+                console.log(responce.data.status)
+              }),function(responce){
+              console.log('Error')
+              }
+          }
+
+        
+});
+
+//controller for adding/editing user
+
+train_app.controller("edit_user",function($scope,$http){
+      $scope.add_user = function(){
+          $http({
+            method:"POST",
+            url:"/user",
+    data:{first_name:$scope.first_name,second_name:$scope.second_name,email:$scope.email,phone:$scope.phone}
+            }).then(function(){
+                console.log("Good");
+            }),function(){
+                console.log("Error");
+            }
+      }
+});
+
+//controller for login logout
+train_app.controller('loginController',function($scope, $http,$window){
+    $scope.login =  function(){
+        console.log($scope.email);
+        console.log($scope.password);
+       $http({
+           method:"POST",
+           url:"/login",
+           data:{login:$scope.email,password:$scope.password}
+                }).then(function succes(responce){
+               if(responce.data.status == "Logined"){
+                 $window.location.href = "/user";
+               }
+               //pop-up windows
+               //show data
+               //redirect to another page
+            },function error(){
+                 console.log("Error")
+            })     
+        };
+    $scope.register =  function(){
+        console.log($scope.email);
+        console.log($scope.password);
+       $http({
+           method:"POST",
+           url:"/register",
+           data:{login:$scope.email,password:$scope.password}
+                }).then(function succes(responce){
+               console.log(responce.data.status)
+            },function error(){
+                 console.log("Error")
+            })     
+        };
+
+    
+});
+</script>
+
+
+
+
+
 </body>
 
 </html>

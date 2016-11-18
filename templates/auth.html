@@ -1,30 +1,58 @@
 
 {% extends "index.html" %}
 {% block auth %}
-<div class="container">
+<div class="container" ng-controller = "loginController">
   <form>
     <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter email">
+      <label for="login">Login:</label>
+      <input type="email" class="form-control" id="login"ng-model="email" required placeholder="Enter email">
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+      <input type="password" class="form-control" id="pwd" ng-model=" password" required placeholder="Enter password">
     </div>
     <div class="checkbox">
       <label><input type="checkbox"> Remember me</label>
     </div>
-    <button id ="sign_in" type="submit" class="btn btn-default">Submit</button>
-    <button id ="register" type="submit" class="btn btn-default">Register</button>
+    <button id ="sign_in" type="submit" class="btn btn-default" ng-click="login()">Submit</button>
+    <button id ="register" type="submit" class="btn btn-default" ng-click="register()">Register</button>
   </form>
 </div>
 <script>
+/*
 $('#sign_in').click(function(){
-
+  var login = $('#login').val();
+  var password = $('#pwd').val();
 });
 $('#register').click(function(){
-
+  var login = $('#login').val();
+  var password = $('#pwd').val();
 });
+*/
+
+
+
+var train_app = angular.module('trainapp',[]);
+
+
+train_app.controller('loginController',function($scope, $http){
+    $scope.login =  function(){
+        console.log($scope.email);
+        console.log($scope.password);
+       $http({
+           method:"POST",
+           url:"/login",
+           data:{login:$scope.email,password:$scope.password}
+                }).then(function succes(){
+               console.log("OK")
+            },function error(){
+                 console.log("Error")          
+                  })     
+        };
+});
+
+
+
 
 </script>
 

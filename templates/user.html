@@ -1,0 +1,251 @@
+
+{% extends "index.html" %}
+{% block buttons%}
+<ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#" id ='show_user' data-toggle="modal" data-target="#myModal">Edit User</a></li>
+      <li><a href="#" id = 'show_position' data-toggle="modal" data-target="#positionModal">Edit Position</a></li> 
+      <li><a href="#" id = 'show_department' data-toggle="modal" data-target="#departmentModal">Edit Department</a></li> 
+	</ul>
+{% endblock %}
+
+{% block main%}
+<!-- Container for positions list -->
+<div clas="container">
+<h2>{{Status}}</h2>
+{% for position in data %}
+<div class="well well-sm">
+	<button>Edid/Add Information</button>
+	<ul>
+		<li>
+			Position Name: {{ position.position_name }}
+		</li>
+		<li>
+			Position Description: {{ position.position_description }}
+		</li>
+	</ul>
+</div>
+{% endfor %}
+</div>
+<!-- Container for users list -->
+<div clas="container">
+<h2>{{Status}}</h2>
+{% for user in data.users %}
+<div class="well well-sm">
+	<button>Edid/Add Information</button>
+	<ul>
+		<li>
+			{{ user.firstname }}
+		</li>
+		<li>
+			{{ user.secondname }}
+		</li>
+		<li>
+			{{ user.birthdate }}
+		</li>
+		<li>
+			{{ user.phone }}
+		</li>
+		<li>
+			{{ user.email }}
+		</li>
+		<li>
+			{{ user.position }}
+		</li>
+		<li>
+			{{ user.department }}
+		</li>
+	</ul>
+</div>
+{% endfor %}
+</div>
+<!-- Open Modal for user edit -->
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+		<!-- -->
+
+		<div class="panel-group" >
+    <div class="panel panel-default">
+      <div class="panel-heading">Edit User</div>
+      <div class="panel-body">	
+	<form ng-controller = "edit_user">
+  		<div class="form-group">
+    			<label for="first_name">First Name:</label>
+    			<input  class="form-control"  ng-model="first_name">
+  		</div>
+  		<div class="form-group">
+    			<label for="second_name">Second name:</label>
+    			<input class="form-control"  ng-model="second_name">
+  		</div>
+  		<div class="form-group">
+    			<label for="email">Email address:</label>
+    			<input class="form-control"  ng-model="email">
+  		</div>
+  		<div class="form-group">
+    			<label for="phone">Phone number:</label>
+    			<input class="form-control"  ng-model="phone">
+  		</div>
+  		<div class="form-group">
+	  		<label for="position">Select Position:</label>
+	  		<select class="form-control" id="sel1" ng-model="position">
+	    			{% for position in data.position %}
+	    		<option>{{ position.position_name }}</option>
+	    			{% endfor %}
+	  		</select>
+ 		</div>
+  		<div class="form-group">
+	  		<label for="department">Select Department:</label>
+	  		<select class="form-control" id="sel1" ng-model="department">
+	    			{% for department in data.department %}
+	    		<option>{{ department.department_name }}</option>
+	    			{% endfor %}
+	  		</select>
+  		</div>
+  		<button type="submit" class="btn btn-default" ng-click = "add_user()">Submit</button>
+	</form>	
+</div>
+</div>
+</div>
+
+
+
+
+		<!-- -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- Open Modal for position edit -->
+
+<div id="positionModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+		<!-- -->
+
+<div class="panel-group" id="edit_position" >
+    <div class="panel panel-default">
+      <div class="panel-heading">Edit Position</div>
+      <div class="panel-body">
+
+
+	<form ng-controller="edit_position">
+	  
+	<div class="form-group">
+	    <label for="position_name">Position Name:</label>
+	    <input ng-model = "position_name" class="form-control" id="pwd">
+	</div>
+	<div class="form-group">
+	    <label for="department">Description</label>
+	    <input ng-model = "position_description" class="form-control" id="email">
+	</div>
+	<button type="submit" class="btn btn-default" ng-click="add_position()">Submit</button>
+	</form>
+</div>
+</div>
+</div>
+
+		<!-- -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+
+<!-- Open Modal for department  edit -->
+
+
+
+<div id="departmentModal" class="modal fade" role="dialog" >
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+		<!-- -->
+
+<div class="panel-group" id="edit_department">
+    <div class="panel panel-default">
+      <div class="panel-heading">Edit Department</div>
+      <div class="panel-body">
+
+
+	<form ng-controller = "edit_department">
+	  
+	<div class="form-group">
+	    <label for="department_name">Department Name:</label>
+	    <input  class="form-control" id="email" ng-model = "department_name">
+	</div>
+	<div class="description">
+	    <label for="email">Description</label>
+	    <input class="form-control" id="email" ng-model = "department_description">
+	</div>
+	<div class="form-group">
+	    <label for="parent">Select Parent:</label>
+	    <select class="form-control" id="sel1" ng-model = "department_parent">
+	    		{% for department in data.department %}
+	    	<option>{{ department.department_name }}</option>
+		    	{% endfor %}
+	    </select>
+	</div>
+	<div class="form-group">
+	    <label for="superuser">Select Superuser:</label>
+	    <select class="form-control" id="sel1" ng-model = "department_administrator">
+		    {% for positions in data.position %}
+	    	<option>{{ positions.position_name }}</option>
+		    {% endfor %}
+	    </select>
+	</div>
+	<button type="submit" class="btn btn-default" ng-click="add_department()">Submit</button>
+	</form>
+</div>
+</div>
+
+
+</div>
+
+		<!-- -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+{% endblock %}
